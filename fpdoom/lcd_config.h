@@ -441,31 +441,6 @@ static const uint8_t cmd9106_init[] = {
 	LCM_END
 };
 
-static const uint8_t cmd9108_init[] = {
-	LCM_DELAY(120),
-	LCM_CMD(0xfe, 0), // Inter Register Enable 1
-	LCM_CMD(0xef, 0), // Inter Register Enable 2
-	LCM_CMD(0xb3, 1), 0x03,
-	LCM_CMD(0xb6, 1), 0x01,
-	LCM_CMD(0xa3, 1), 0x11,
-	LCM_CMD(0x21, 0),
-	//LCM_CMD(0x36, 1), 0xd0, // Memory Access Control
-	LCM_CMD(0x3a, 1), 0x05, // Pixel Format Set
-	LCM_CMD(0xb4, 1), 0x21,
-	// Set Gamma 1
-	LCM_CMD(0xf0, 14), 0x25,0x58,0x24,0x68,
-		0xad,0x36,0x38,0x00, 0x0b,0x15,0x15,0x17, 0x15,0x0f,
-	// Set Gamma 2
-	LCM_CMD(0xf1, 14), 0x00,0x1e,0x25,0x30,
-		0x97,0x03,0x03,0x00, 0x00,0x07,0x07,0x15, 0x14,0x0f,
-	LCM_CMD(0x35, 1), 0x00,
-	LCM_CMD(0x44, 1), 0x00,
-	LCM_CMD(0x11, 0), // Sleep Out Mode
-	LCM_DELAY(120),
-	LCM_CMD(0x29, 0), // Display ON
-	LCM_END
-};
-
 // 240x240
 static const uint8_t cmd9307_init240[] = {
 	LCM_CMD(0xfe, 0), // Inter Register Enable 1
@@ -663,6 +638,31 @@ static const uint8_t cmd333025_init[] = {
 };
 #endif
 
+static const uint8_t cmd9108_init[] = {
+	LCM_DELAY(120),
+	LCM_CMD(0xfe, 0), // Inter Register Enable 1
+	LCM_CMD(0xef, 0), // Inter Register Enable 2
+	LCM_CMD(0xb3, 1), 0x03,
+	LCM_CMD(0xb6, 1), 0x01,
+	LCM_CMD(0xa3, 1), 0x11,
+	LCM_CMD(0x21, 0),
+	//LCM_CMD(0x36, 1), 0xd0, // Memory Access Control
+	LCM_CMD(0x3a, 1), 0x05, // Pixel Format Set
+	LCM_CMD(0xb4, 1), 0x21,
+	// Set Gamma 1
+	LCM_CMD(0xf0, 14), 0x25,0x58,0x24,0x68,
+		0xad,0x36,0x38,0x00, 0x0b,0x15,0x15,0x17, 0x15,0x0f,
+	// Set Gamma 2
+	LCM_CMD(0xf1, 14), 0x00,0x1e,0x25,0x30,
+		0x97,0x03,0x03,0x00, 0x00,0x07,0x07,0x15, 0x14,0x0f,
+	LCM_CMD(0x35, 1), 0x00,
+	LCM_CMD(0x44, 1), 0x00,
+	LCM_CMD(0x11, 0), // Sleep Out Mode
+	LCM_DELAY(120),
+	LCM_CMD(0x29, 0), // Display ON
+	LCM_END
+};
+
 static const lcd_config_t lcd_config[] = {
 #if CHIP == 1
 /* F+ F256 */
@@ -714,13 +714,14 @@ static const lcd_config_t lcd_config[] = {
 	{ 0x9290f6, 0xffffff, 1, 2, 5,  240, 320, 0, 0, 2,  { 0 }, { 52000000 }, 0x00, cmd9290F6_init },
 #endif
 
+	// GlaxyCore GC9108
+	{ 0x009108, 0xffffff, 0, 0, 0,  128, 160, 1, 0, 2,  { 30, 150, 150, 40, 50, 50 }, { 0 },  0xd0, cmd9108_init },
+
 #if CHIP == 2 || CHIP == 3
 /* Joy's S21 */
 
 	// GlaxyCore GC9106
 	{ 0x009106, 0xffffff, 0, 0, 0,  128, 160, 1, 0, 2,  { 30, 150, 150, 40, 50, 50 }, { 0 },  0xd0, cmd9106_init },
-	// GlaxyCore GC9108
-	{ 0x009108, 0xffffff, 0, 0, 0,  128, 160, 1, 0, 2,  { 30, 150, 150, 40, 50, 50 }, { 0 },  0xd0, cmd9108_init },
 
 /* Vector M115 */
 
